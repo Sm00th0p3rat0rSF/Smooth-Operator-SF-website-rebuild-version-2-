@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smooth Operator SF — Premium Studio Booking (Static Reference)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles for Muted Glass Look & Animations -->
+  <style>
+    body {
+      background-color: #06040a;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(135, 90, 240, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(57, 255, 20, 0.08) 0%, transparent 45%);
+      background-attachment: fixed;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(33, 27, 48, 0.76);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(168, 142, 224, 0.16);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .glass-dark {
+      background: rgba(22, 18, 32, 0.90);
+      border: 1px solid rgba(168, 142, 224, 0.08);
+    }
+
+    .glass-light {
+      background: rgba(56, 48, 77, 0.62);
+      border: 1px solid rgba(168, 142, 224, 0.24);
+    }
+
+    /* Active selections and highlights */
+    .neon-active {
+      border-color: #39ff14;
+      box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+    }
+
+    .neon-text-glow {
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+    }
+
+    .gold-border {
+      border-color: #D4AF37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+    }
+
+    /* Soft scale and transitions */
+    .transition-all-custom {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.85);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.6);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(0.85);
+        opacity: 0.8;
+      }
+    }
+
+    .pulse-ring-active {
+      animation: pulse-ring 2.5s infinite ease-in-out;
+      transform-origin: center;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-200 py-6 px-4 md:px-8">
+
+  <div class="max-w-7xl mx-auto space-y-6">
+    
+    <!-- 1. Header Banner with Rotating Constellation Canvas -->
+    <header class="glass rounded-3xl overflow-hidden relative p-8 md:p-12 border border-purple-500/10">
+      <!-- Background Starry Canvas -->
+      <canvas id="starfield" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 z-0"></canvas>
+      
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-yellow-500/10 text-[#D4AF37] border border-yellow-500/20 tracking-wider uppercase font-semibold">
+              ★ Studio Reference Player
+            </span>
+          </div>
+          <h1 class="text-4xl md:text-5xl font-display font-bold text-white tracking-tight">
+            SMOOTH OPERATOR <span class="text-[#D4AF37]">SF</span>
+          </h1>
+          <p class="text-sm md:text-base text-gray-400 mt-2 max-w-2xl font-sans">
+            A premium full-stack intimate grooming experience designed for luxury, compliance, and absolute care. Select target areas directly from the anatomical model or review smart scheduling rules.
+          </p>
+        </div>
+        
+        <div class="flex flex-col items-end gap-1 bg-black/30 p-4 rounded-2xl border border-white/5">
+          <span class="text-xs text-gray-500 font-mono">AUTHORIZED ADMINISTRATOR</span>
+          <span class="text-sm font-semibold text-[#39ff14] font-mono">admin@smoothoperatorsf.com</span>
+          <span class="text-[10px] text-gray-400 font-mono mt-1">Stripe Sandboxed API Status: <span class="text-yellow-400">VAULT LOCK</span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT BLOCK: Interactive Human Body Map (Cols 7) -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="glass rounded-3xl p-6 md:p-8 space-y-6">
+          <div class="flex justify-between items-center border-b border-white/10 pb-4">
+            <div>
+              <h2 class="text-xl md:text-2xl font-display font-bold text-white flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-5 h-5 text-[#39ff14]"></i> Interactive Body Map
+              </h2>
+              <p class="text-xs text-gray-400 mt-1">Select targets on the model silhouettes to find specialized services.</p>
+            </div>
+            
+            <!-- View Side Controllers -->
+            <div class="bg-black/40 p-1 rounded-xl flex border border-white/10 font-sans max-w-[200px]">
+              <button id="view-front-btn" onclick="setViewSide('front')" class="py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer bg-[#39ff14] text-black shadow-[0_0_15px_rgba(57,255,20,0.4)]">
+                Front
+              </button>
+              <button id="view-back-btn" onclick="setViewSide('back')" class="py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer text-gray-400 hover:text-white">
+                Back
+              </button>
+            </div>
+          </div>
+
+          <!-- The Silhouette Stage -->
+          <div class="flex flex-col md:flex-row gap-6 items-center">
+            
+            <!-- Physical Map Area -->
+            <div class="relative w-full max-w-[280px] aspect-[100/220] bg-transparent border border-white/10 rounded-2xl flex items-center justify-center overflow-hidden shadow-2xl select-none group">
+              <!-- Silhouette Images (linked directly to main repo assets via relative paths) -->
+              <img id="front-view-img" src="../src/assets/images/Frontview.png" alt="Front view" class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 brightness-[0.80] contrast-[1.05] mix-blend-screen transition-opacity duration-300">
+              <img id="back-view-img" src="../src/assets/images/backview.png" alt="Back view" class="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 brightness-[0.80] contrast-[1.05] mix-blend-screen transition-opacity duration-300 opacity-0">
+              
+              <!-- Subtle gold vignette mask -->
+              <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-transparent to-black/40 z-10"></div>
+              
+              <!-- SVG Coordinates Overlay -->
+              <svg class="absolute inset-0 w-full h-full z-20" viewBox="0 0 100 220" preserveAspectRatio="xMidYMid slice" id="hotspot-svg">
+                <!-- Hotspot markers will be injected here via JS -->
+              </svg>
+            </div>
+
+            <!-- Targeted Spot Services Picker Sidebar -->
+            <div class="flex-1 w-full space-y-4">
+              <div class="glass-dark rounded-2xl p-5 border border-purple-500/5 space-y-3">
+                <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                  <span id="spot-label" class="text-sm font-display font-semibold tracking-wide text-[#D4AF37] uppercase">INTIMATE AREA</span>
+                  <span class="text-[10px] font-mono text-gray-500 uppercase bg-white/5 px-2 py-0.5 rounded-full" id="spot-side-indicator">Front View</span>
+                </div>
+                
+                <p id="spot-desc" class="text-xs text-gray-400 leading-relaxed min-h-[40px]">
+                  Delicate custom intimate wax formulations tailored specifically to client anatomy for pristine, high-confidence results.
+                </p>
+
+                <!-- Anatomy Switch Toggle for Intimate Waxing -->
+                <div id="anatomy-toggle-container" class="flex flex-col gap-2 bg-purple-950/10 p-3 rounded-xl border border-purple-500/10">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-white">Anatomical Variant</span>
+                    <button id="anatomy-swap-btn" onclick="toggleAnatomy()" class="bg-[#39ff14] text-black text-[10px] font-mono font-bold px-3 py-1 rounded-md transition hover:scale-105">
+                      Toggle to (Vagina)
+                    </button>
+                  </div>
+                  <p id="anatomy-note" class="text-[10px] text-yellow-400 italic font-mono leading-tight">
+                    "Since intimate waxing varies by anatomy, I pre-selected the (Penis) option for now. Please feel free to toggle it to (Vagina) below if that fits you better so Drew can reserve the perfect time!"
+                  </p>
+                </div>
+
+                <!-- Live Service Items in Selected Spot -->
+                <div class="space-y-2 mt-3" id="spot-services-list">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Set-Theory Algorithm Visualizer Diagnostics -->
+        <div class="glass rounded-3xl p-6 md:p-8 space-y-4">
+          <h3 class="text-lg font-display font-bold text-white flex items-center gap-2">
+            <i data-lucide="shuffle" class="w-5 h-5 text-[#39ff14]"></i> Smart Spatial Overlap Prevention Matrix
+          </h3>
+          <p class="text-xs text-gray-400">
+            The studio's smart algorithms verify target sets in your cart to avoid charging twice for identical overlapping skin zones. Select the test cases below to view the automatic adjustments:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Overlap Test 1 -->
+            <button onclick="triggerTestOverlap('brazilian')" class="text-left bg-black/40 hover:bg-[#39ff14]/5 p-4 rounded-xl border border-white/5 transition-all duration-200 group flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-white font-display">Test Overlap Case A</span>
+                  <span class="text-[10px] font-mono text-yellow-400 bg-yellow-500/10 px-2 py-0.5 rounded">Intimate</span>
+                </div>
+                <h4 class="text-sm font-semibold text-gray-300 mt-2">Bikini Full + Butt Strip</h4>
+                <p class="text-[11px] text-gray-400 mt-1">In intimate waxing, booking both separate areas is merged into a Brazilian service saving double checkout fees.</p>
+              </div>
+              <div class="text-[11px] text-[#39ff14] font-mono mt-3 flex items-center gap-1">
+                Run Simulation <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </div>
+            </button>
+
+            <!-- Overlap Test 2 -->
+            <button onclick="triggerTestOverlap('cheek')" class="text-left bg-black/40 hover:bg-[#39ff14]/5 p-4 rounded-xl border border-white/5 transition-all duration-200 group flex flex-col justify-between h-full">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-white font-display">Test Overlap Case B</span>
+                  <span class="text-[10px] font-mono text-yellow-400 bg-yellow-500/10 px-2 py-0.5 rounded">Gluteal cheeks</span>
+                </div>
+                <h4 class="text-sm font-semibold text-gray-300 mt-2">Butt Full + Brazilian</h4>
+                <p class="text-[11px] text-gray-400 mt-1">Both cover the intergluteal cleft (butt strip). The system splits them to Bikini Full + Butt Full to avoid redundant strip charges, saving $15.</p>
+              </div>
+              <div class="text-[11px] text-[#39ff14] font-mono mt-3 flex items-center gap-1">
+                Run Simulation <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT BLOCK: Intake Compliance, Cart, and Sanitary checkout (Cols 5) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <!-- Cart & Sanitary Summary -->
+        <div class="glass rounded-3xl p-6 md:p-8 space-y-4">
+          <h2 class="text-xl font-display font-bold text-white flex items-center gap-2">
+            <i data-lucide="shopping-cart" class="w-5 h-5 text-[#39ff14]"></i> Your Cart & Pricing
+          </h2>
+          
+          <div class="space-y-3" id="cart-container">
+            <!-- Dynamic items injected here -->
+            <div id="empty-cart" class="text-center py-8 text-gray-500 text-xs">
+              Your booking cart is empty. Click hotspot spots to add services.
+            </div>
+          </div>
+
+          <!-- Alert area for auto-merged and resolved rules -->
+          <div id="cart-alert-area" class="hidden"></div>
+
+          <!-- Price & Buffer Breakdown -->
+          <div class="border-t border-white/10 pt-4 space-y-2">
+            <div class="flex justify-between text-xs text-gray-400">
+              <span>Selected Services Total:</span>
+              <span id="price-subtotal" class="font-mono text-white">$0.00</span>
+            </div>
+            
+            <div class="flex justify-between text-xs text-gray-400">
+              <span>Service Duration:</span>
+              <span id="service-duration" class="font-mono text-white">0 mins</span>
+            </div>
+
+            <!-- Sanitary 15 Buffer calculus -->
+            <div class="flex flex-col bg-purple-950/10 p-3 rounded-xl border border-purple-500/10 space-y-1">
+              <div class="flex justify-between text-xs text-yellow-400">
+                <span class="flex items-center gap-1 font-semibold"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Invisible Sanitization Buffer:</span>
+                <span class="font-mono">+15 mins</span>
+              </div>
+              <p class="text-[10px] text-gray-400 leading-normal">
+                An implicit 15-minute hygiene buffer is automatically appended for Drew to sanitize the tables. This is written directly to the Google Calendar, but remains strictly invisible to clients.
+              </p>
+            </div>
+
+            <div class="flex justify-between items-center text-sm font-semibold border-t border-white/5 pt-3">
+              <span class="text-white">Aggregate Booking Slot:</span>
+              <span id="aggregate-duration" class="font-mono text-[#39ff14]">15 mins</span>
+            </div>
+
+            <div class="flex justify-between items-center text-lg font-bold border-t border-white/5 pt-2">
+              <span class="text-[#D4AF37] font-display">Total Booking Fee:</span>
+              <span id="price-total" class="font-mono text-white">$0.00</span>
+            </div>
+            <p class="text-[9px] text-gray-500 text-right italic font-mono mt-0.5">Capturing raw cards via Stripe for booking security only. Zero charged upfront.</p>
+          </div>
+        </div>
+
+        <!-- Mandatory Intake Compliance Gates -->
+        <div class="glass rounded-3xl p-6 md:p-8 space-y-5 relative">
+          <div class="border-b border-white/10 pb-3 flex justify-between items-center">
+            <h2 class="text-xl font-display font-bold text-white flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-[#D4AF37]"></i> Studio Intake & Safety Gate
+            </h2>
+            <span class="text-[10px] font-mono text-yellow-500 bg-yellow-500/10 px-2.5 py-0.5 rounded-full uppercase font-bold tracking-wider">Mandatory</span>
+          </div>
+
+          <!-- AGE GATE -->
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-gray-300">1. Age Verification Check (18+ Mandatory)</label>
+            <div class="grid grid-cols-2 gap-3">
+              <input type="date" id="birthdate-input" onchange="checkAge()" class="bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#39ff14] w-full">
+              <div class="relative bg-black/40 border border-dashed border-white/20 rounded-lg p-2 text-center hover:border-white/40 transition cursor-pointer flex items-center justify-center gap-1.5" onclick="triggerMockUpload()">
+                <i data-lucide="upload-cloud" class="w-4 h-4 text-gray-400"></i>
+                <span id="upload-label" class="text-[10px] text-gray-400">Upload ID Card</span>
+              </div>
+            </div>
+            <p id="age-alert" class="text-[10px] text-red-400 font-mono hidden"><i data-lucide="alert-triangle" class="inline w-3 h-3"></i> Clients must be 18+ to book intimate grooming.</p>
+          </div>
+
+          <!-- DIGITAL SIGNATURE CANVAS -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-semibold text-gray-300">2. Client Digital NDA Waiver & Agreement</label>
+              <button onclick="clearSignature()" class="text-[9px] font-mono text-gray-500 hover:text-white uppercase">Clear</button>
+            </div>
+            <div class="bg-black/60 rounded-xl overflow-hidden border border-white/10 relative">
+              <canvas id="sig-pad" class="w-full h-24 bg-black/40 cursor-crosshair z-10 block"></canvas>
+              <div id="sig-placeholder" class="absolute inset-0 flex items-center justify-center pointer-events-none text-gray-600 text-[10px] font-mono">
+                Sign with mouse or touch here
+              </div>
+            </div>
+          </div>
+
+          <!-- LATE CANCELLATION COMMITMENT -->
+          <div class="flex items-start gap-2.5 bg-black/30 p-3 rounded-xl border border-white/5">
+            <input type="checkbox" id="cancellation-chk" onchange="updateSubmitButton()" class="mt-0.5 accent-[#39ff14]">
+            <p class="text-[10px] text-gray-400 leading-relaxed">
+              I agree to the late cancellation commitment. Cancelations made under 24 hours or complete appointment no-shows are subject to a standard 100% service fee booked on the secured Stripe element token vault.
+            </p>
+          </div>
+
+          <!-- SECURE SUBMIT PROPOSALS -->
+          <button id="book-btn" disabled onclick="submitBooking()" class="w-full py-3 px-6 bg-gray-800 text-gray-500 rounded-xl text-xs font-bold font-display uppercase tracking-wider cursor-not-allowed transition-all-custom duration-300">
+            COMPLETE LOCK IN PCI SECURED STRIPE ELEMENT
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SKINCARE SAFETY WARNING MODAL (Facial wax active block) -->
+  <div id="skincare-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-md">
+    <div class="glass max-w-md w-full rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl relative border border-yellow-500/20">
+      <div class="flex items-center gap-3 text-yellow-400 border-b border-white/10 pb-3">
+        <i data-lucide="alert-triangle" class="w-8 h-8 animate-bounce"></i>
+        <div>
+          <h3 class="text-lg font-display font-bold text-white uppercase tracking-tight">Active Skin Safety Lock</h3>
+          <span class="text-[10px] font-mono text-yellow-400 font-semibold tracking-wide">FACIAL CONTRAINDICATION WARNING</span>
+        </div>
+      </div>
+      
+      <p class="text-xs text-gray-300 leading-relaxed">
+        You have selected a high-precision **Facial Waxing** service. Waxing skin while active retinols or skin thinning medications are present can trigger severe skin abrasion, redness, or dermal tearing.
+      </p>
+
+      <div class="bg-black/30 p-4 rounded-xl space-y-3 border border-white/5">
+        <p class="text-xs font-semibold text-white">Have you used any of these in the past 7 days?</p>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2.5 text-xs text-gray-400 cursor-pointer">
+            <input type="checkbox" id="safety-retin" class="accent-yellow-400">
+            <span>Retin-A, Tazorac, or active Retinoids</span>
+          </label>
+          <label class="flex items-center gap-2.5 text-xs text-gray-400 cursor-pointer">
+            <input type="checkbox" id="safety-accutane" class="accent-yellow-400">
+            <span>Accutane or high-concentration Retinols</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="dismissSafetyModal(true)" class="flex-1 py-2 px-4 bg-yellow-500 text-black text-xs font-bold rounded-lg transition hover:bg-yellow-400 uppercase tracking-wide">
+          Yes (Block & Advise)
+        </button>
+        <button onclick="dismissSafetyModal(false)" class="flex-1 py-2 px-4 bg-white/10 text-white text-xs font-bold rounded-lg transition hover:bg-white/20 uppercase tracking-wide">
+          No (Proceed safely)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING SUCCESS MODAL -->
+  <div id="success-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-md">
+    <div class="glass max-w-md w-full rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl text-center border border-[#39ff14]/20">
+      <div class="mx-auto w-12 h-12 bg-[#39ff14]/10 border border-[#39ff14]/30 rounded-full flex items-center justify-center">
+        <i data-lucide="check" class="w-6 h-6 text-[#39ff14]"></i>
+      </div>
+      
+      <div class="space-y-2">
+        <h3 class="text-xl font-display font-bold text-white uppercase">Secure Intent Captured!</h3>
+        <p class="text-xs text-[#39ff14] font-mono">PCI COMPLIANT VAULT TOKENIZATION SUCCESS</p>
+      </div>
+
+      <div class="bg-black/30 p-4 rounded-xl text-left space-y-2 text-xs border border-white/5 font-mono">
+        <p class="text-white flex justify-between"><span>Booking Code:</span> <span class="text-yellow-400">SO-SF-7809</span></p>
+        <p class="text-white flex justify-between"><span>Waiver Archive:</span> <span class="text-yellow-400">NDA_SIGNED.pdf</span></p>
+        <p class="text-white flex justify-between"><span>Audit IP Address:</span> <span class="text-yellow-400">198.162.0.1</span></p>
+        <p class="text-white flex justify-between"><span>Total Duration:</span> <span class="text-yellow-400" id="success-duration">0 mins</span></p>
+      </div>
+
+      <p class="text-xs text-gray-400 leading-relaxed">
+        Your booking proposal has been logged securely in our cloud database. Drew will review your anatomical selections and confirm your slot. Keep an eye out for automatic post-wax guidelines!
+      </p>
+
+      <button onclick="closeSuccessModal()" class="w-full py-2.5 px-4 bg-[#39ff14] text-black text-xs font-bold rounded-xl transition hover:scale-105 uppercase tracking-wide">
+        Return to Booking Map
+      </button>
+    </div>
+  </div>
+
+  <!-- Javascript Code with Full State Machine and Smart Scheduling Systems -->
+  <script>
+    // 1. Core Services Data (Matches React Services.ts exactly)
+    const SERVICES_DATA = [
+      { id: 'intimate-brazilian-penis', category: 'Intimate Waxing', name: 'Brazilian (Penis)', duration: 25, price: 90.00, bodyPartId: 'intimate', desc: 'A signature "smooth" service covering from the base of the shaft to the scrotum, perineum, and anal area. Includes complimentary grooming.' },
+      { id: 'intimate-brazilian-vagina', category: 'Intimate Waxing', name: 'Brazilian (Vagina)', duration: 20, price: 90.00, bodyPartId: 'intimate', desc: 'Removes hair from the entire pubic area, including the labia and perineum. Designed for a bare, confident feel.' },
+      { id: 'intimate-bikini-full-penis', category: 'Intimate Waxing', name: 'Bikini - Full (Penis)', duration: 20, price: 75.00, bodyPartId: 'intimate', desc: 'A groomed look that removes hair from the penis, scrotum, and bikini line while leaving the perineum untouched.' },
+      { id: 'intimate-bikini-full-vagina', category: 'Intimate Waxing', name: 'Bikini - Full (Vagina)', duration: 15, price: 75.00, bodyPartId: 'intimate', desc: 'Removes hair from the labia and bikini line but excludes the perineum and "back door" area.' },
+      { id: 'intimate-bikini-line', category: 'Intimate Waxing', name: 'Bikini - Line', duration: 5, price: 52.00, bodyPartId: 'intimate', desc: 'A tidy-up service for hair extending beyond the underwear or swimsuit line.' },
+      { id: 'intimate-butt-full', category: 'Intimate Waxing', name: 'Butt - Full', duration: 10, price: 47.00, bodyPartId: 'butt', desc: 'Comprehensive removal of hair from the cheeks and the intergluteal butt strip.' },
+      { id: 'intimate-butt-strip', category: 'Intimate Waxing', name: 'Butt Strip', duration: 5, price: 27.00, bodyPartId: 'butt', desc: 'A focused service for the perineum and anal area to ensure a clean result.' },
+      { id: 'body-legs-full', category: 'Body Waxing', name: 'Full Legs', duration: 50, price: 120.00, bodyPartId: 'legs', desc: 'Complete hair removal from the top of the thighs to the ankles.' },
+      { id: 'body-legs-lower', category: 'Body Waxing', name: 'Lower Legs', duration: 15, price: 75.00, bodyPartId: 'legs', desc: 'Removal of hair from the knees down to the ankles.' },
+      { id: 'body-legs-upper', category: 'Body Waxing', name: 'Upper Legs', duration: 15, price: 70.00, bodyPartId: 'legs', desc: 'Removal of hair from the top of the thighs down to the knees.' },
+      { id: 'body-arms-full', category: 'Body Waxing', name: 'Full Arms', duration: 25, price: 80.00, bodyPartId: 'arms', desc: 'Complete hair removal from the shoulders down to the wrists.' },
+      { id: 'body-arms-half', category: 'Body Waxing', name: 'Half Arm', duration: 10, price: 40.00, bodyPartId: 'arms', desc: 'Removal of hair from either the elbow to the wrist or shoulder to elbow.' },
+      { id: 'body-back-full', category: 'Body Waxing', name: 'Full Back', duration: 15, price: 90.00, bodyPartId: 'back', desc: 'Complete hair removal from the base of the neck down to the waistline.' },
+      { id: 'body-shoulder', category: 'Body Waxing', name: 'Shoulder Waxing', duration: 10, price: 30.00, bodyPartId: 'shoulders', desc: 'Removes hair from the tops of the shoulders and upper arms.' },
+      { id: 'body-stomach-full', category: 'Body Waxing', name: 'Stomach - Full', duration: 7, price: 38.00, bodyPartId: 'stomach', desc: 'Clears hair from the chest line down to the happy trail for a sculpted look.' },
+      { id: 'body-chest-full', category: 'Body Waxing', name: 'Chest - Full', duration: 7, price: 40.00, bodyPartId: 'chest', desc: 'Complete hair removal from the chest area.' },
+      { id: 'body-inner-thigh', category: 'Body Waxing', name: 'Inner Thigh', duration: 5, price: 35.00, bodyPartId: 'legs', desc: 'Targets unwanted hair in the upper/inner leg area.' },
+      { id: 'face-full', category: 'Face Waxing', name: 'Full Face', duration: 45, price: 69.00, bodyPartId: 'face', desc: 'Comprehensive removal of unwanted facial hair. Includes brows, nose, and ears.' },
+      { id: 'face-eyebrows', category: 'Face Waxing', name: 'Eyebrows', duration: 15, price: 27.00, bodyPartId: 'face', desc: 'Shapes and defines brows to a clean, custom natural look.' },
+      { id: 'face-nose', category: 'Face Waxing', name: 'Nose', duration: 7, price: 15.00, bodyPartId: 'face', desc: 'Gently removes unwanted fuzz from the nostrils.' },
+      { id: 'face-ears', category: 'Face Waxing', name: 'Ears', duration: 5, price: 15.00, bodyPartId: 'face', desc: 'Tames wild sprouts from the outer ear area.' },
+      { id: 'face-chin', category: 'Face Waxing', name: 'Chin', duration: 10, price: 20.00, bodyPartId: 'face', desc: 'Removal of unwanted hair from the chin area.' },
+      { id: 'face-neck-front', category: 'Face Waxing', name: 'Front of Neck', duration: 10, price: 19.00, bodyPartId: 'face', desc: 'Removal of unwanted hair from the front of the neck.' },
+      { id: 'manscaping-legs', category: 'Manscaping', name: 'Legs Trimming', duration: 10, price: 40.00, bodyPartId: 'legs', desc: 'Meticulous trimming to a manageable length.' },
+      { id: 'manscaping-bikini-full', category: 'Manscaping', name: 'Bikini - Full (Manscape)', duration: 5, price: 40.00, bodyPartId: 'intimate', desc: 'Trimming groin, bikini line, and optionally shaft/scrotum.' },
+      { id: 'manscaping-back', category: 'Manscaping', name: 'Back Trimming', duration: 5, price: 25.00, bodyPartId: 'back', desc: 'Maintains back hair at a short, grooming style.' }
+    ];
+
+    // 2. Hotspots Definition
+    const FRONT_HOTSPOTS = [
+      { id: 'face', name: 'Face Zone', cx: 50, cy: 28, desc: 'Facial waxing and meticulous shaping.' },
+      { id: 'chest', name: 'Chest Area', cx: 50, cy: 58, desc: 'Torso styling, chest trims, and wax.' },
+      { id: 'stomach', name: 'Stomach Zone', cx: 50, cy: 82, desc: 'Sleek happy trails and stomach grooming.' },
+      { id: 'arms', name: 'Arms & Underarms', cx: 24, cy: 80, desc: 'Clean arms and fresh underarm clearing.' },
+      { id: 'intimate', name: 'Intimate Area', cx: 50, cy: 112, desc: 'Delicate intimate styling tailored to anatomy.' },
+      { id: 'legs', name: 'Legs & Inner Thigh', cx: 40, cy: 160, desc: 'Full thigh-to-ankle smooth coverage.' }
+    ];
+
+    const BACK_HOTSPOTS = [
+      { id: 'shoulders', name: 'Shoulders', cx: 28, cy: 62, desc: 'Sleek athletic neck-to-arm sleeve transition.' },
+      { id: 'back', name: 'Full Back', cx: 50, cy: 72, desc: 'Comprehensive upper/lower back clearing.' },
+      { id: 'butt', name: 'Butt & Cleft Strip', cx: 50, cy: 114, desc: 'Gluteal cheeks and sanitary cleft strip wax.' }
+    ];
+
+    // 3. Application State Variables
+    let currentViewSide = 'front';
+    let selectedSpotId = 'intimate';
+    let intimateAnatomyVariant = 'penis'; // penis default
+    let showIntimateAnatomyToggleNotice = true;
+    let selectedServicesCart = [];
+    let uploadCaptured = false;
+    let ageValid = false;
+
+    // Hotspot coordinates adjustments
+    const hotSpotOffsets = {
+      face: { cx: 50, cy: 28 },
+      chest: { cx: 50, cy: 58 },
+      stomach: { cx: 50, cy: 82 },
+      arms: { cx: 24, cy: 80 },
+      intimate: { cx: 50, cy: 112 },
+      legs: { cx: 40, cy: 160 },
+      shoulders: { cx: 28, cy: 62 },
+      back: { cx: 50, cy: 72 },
+      butt: { cx: 50, cy: 114 }
+    };
+
+    // 4. Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initStarfield();
+      initSignaturePad();
+      renderHotspots();
+      renderSelectedSpotDetails();
+      updateCartDisplay();
+    });
+
+    // Background Rotating Starfield Canvas implementation
+    function initStarfield() {
+      const canvas = document.getElementById('starfield');
+      const ctx = canvas.getContext('2d');
+      let stars = [];
+      
+      function resizeCanvas() {
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      for (let i = 0; i < 40; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5 + 0.5,
+          color: Math.random() > 0.6 ? '#D4AF37' : '#ffffff',
+          angle: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.005 + 0.002
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+          star.angle += star.speed;
+          star.x += Math.cos(star.angle) * 0.15;
+          star.y += Math.sin(star.angle) * 0.15;
+
+          if (star.x < 0) star.x = canvas.width;
+          if (star.x > canvas.width) star.x = 0;
+          if (star.y < 0) star.y = canvas.height;
+          if (star.y > canvas.height) star.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fillStyle = star.color;
+          ctx.fill();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // Interactive Silhouette View Toggle
+    function setViewSide(side) {
+      currentViewSide = side;
+      
+      const frontImg = document.getElementById('front-view-img');
+      const backImg = document.getElementById('back-view-img');
+      const frontBtn = document.getElementById('view-front-btn');
+      const backBtn = document.getElementById('view-back-btn');
+
+      if (side === 'front') {
+        frontImg.classList.remove('opacity-0');
+        backImg.classList.add('opacity-0');
+        frontBtn.className = "py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer bg-[#39ff14] text-black shadow-[0_0_15px_rgba(57,255,20,0.4)]";
+        backBtn.className = "py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer text-gray-400 hover:text-white";
+        selectedSpotId = 'intimate';
+      } else {
+        frontImg.classList.add('opacity-0');
+        backImg.classList.remove('opacity-0');
+        frontBtn.className = "py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer text-gray-400 hover:text-white";
+        backBtn.className = "py-1 px-3 rounded-lg text-[10px] font-bold tracking-wider uppercase transition cursor-pointer bg-[#39ff14] text-black shadow-[0_0_15px_rgba(57,255,20,0.4)]";
+        selectedSpotId = 'butt';
+      }
+
+      renderHotspots();
+      renderSelectedSpotDetails();
+    }
+
+    // Render SVG Hotspot Nodes
+    function renderHotspots() {
+      const svg = document.getElementById('hotspot-svg');
+      svg.innerHTML = ''; // Reset SVG
+
+      const hotspotsToRender = currentViewSide === 'front' ? FRONT_HOTSPOTS : BACK_HOTSPOTS;
+      
+      hotspotsToRender.forEach(hs => {
+        const offset = hotSpotOffsets[hs.id];
+        const cx = offset ? offset.cx : hs.cx;
+        const cy = offset ? offset.cy : hs.cy;
+
+        const isSelected = selectedSpotId === hs.id;
+
+        // Group element
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        g.setAttribute("class", "cursor-pointer");
+        g.setAttribute("onclick", `selectSpot('${hs.id}')`);
+
+        // Ambient Glowing Breathing Pulse
+        if (isSelected) {
+          const pulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          pulse.setAttribute("cx", cx);
+          pulse.setAttribute("cy", cy);
+          pulse.setAttribute("r", "1.8");
+          pulse.setAttribute("fill", "#39ff14");
+          pulse.setAttribute("opacity", "0.4");
+          pulse.setAttribute("class", "pulse-ring-active");
+          g.appendChild(pulse);
+        }
+
+        // External Glow Boundary Ring
+        const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        ring.setAttribute("cx", cx);
+        ring.setAttribute("cy", cy);
+        ring.setAttribute("r", isSelected ? "3.2" : "2.2");
+        ring.setAttribute("fill", "transparent");
+        ring.setAttribute("stroke", isSelected ? "#39ff14" : "#D4AF37");
+        ring.setAttribute("stroke-width", "0.55");
+        ring.setAttribute("class", "transition-all duration-300");
+        g.appendChild(ring);
+
+        // Core Center Dot
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", cx);
+        dot.setAttribute("cy", cy);
+        dot.setAttribute("r", isSelected ? "1.2" : "0.85");
+        dot.setAttribute("fill", isSelected ? "#39ff14" : "#D4AF37");
+        g.appendChild(dot);
+
+        // Mobile touch-extension bubble (generous invisible overlay)
+        const touchOverlay = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        touchOverlay.setAttribute("cx", cx);
+        touchOverlay.setAttribute("cy", cy);
+        touchOverlay.setAttribute("r", "8");
+        touchOverlay.setAttribute("fill", "transparent");
+        g.appendChild(touchOverlay);
+
+        svg.appendChild(g);
+      });
+    }
+
+    // Select Active Hotspot Zone
+    function selectSpot(spotId) {
+      selectedSpotId = spotId;
+      renderHotspots();
+      renderSelectedSpotDetails();
+    }
+
+    // Toggle Anatomy penis vs vagina with inline reminder notice
+    function toggleAnatomy() {
+      intimateAnatomyVariant = intimateAnatomyVariant === 'penis' ? 'vagina' : 'penis';
+      const btn = document.getElementById('anatomy-swap-btn');
+      const note = document.getElementById('anatomy-note');
+
+      if (intimateAnatomyVariant === 'penis') {
+        btn.innerText = "Toggle to (Vagina)";
+        note.classList.remove('hidden');
+      } else {
+        btn.innerText = "Toggle to (Penis)";
+        note.classList.add('hidden');
+      }
+
+      renderSelectedSpotDetails();
+    }
+
+    // Injects Active Spot details & matching services into the HTML picker list
+    function renderSelectedSpotDetails() {
+      const label = document.getElementById('spot-label');
+      const sideInd = document.getElementById('spot-side-indicator');
+      const desc = document.getElementById('spot-desc');
+      const servicesList = document.getElementById('spot-services-list');
+      const anatomyContainer = document.getElementById('anatomy-toggle-container');
+
+      // Get Active Hotspot Info
+      const activeHotspots = currentViewSide === 'front' ? FRONT_HOTSPOTS : BACK_HOTSPOTS;
+      const hsInfo = activeHotspots.find(h => h.id === selectedSpotId);
+
+      if (!hsInfo) return;
+
+      label.innerText = hsInfo.name;
+      sideInd.innerText = currentViewSide === 'front' ? "Front View" : "Back View";
+      desc.innerText = hsInfo.desc;
+
+      // Toggle Intimate Anatomy Controls Visibility
+      if (selectedSpotId === 'intimate') {
+        anatomyContainer.classList.remove('hidden');
+      } else {
+        anatomyContainer.classList.add('hidden');
+      }
+
+      // Filter active services mapping the active body part and anatomy preferences
+      let matchingServices = SERVICES_DATA.filter(srv => srv.bodyPartId === selectedSpotId);
+
+      // In intimate, filter by anatomical variant selection (vagina/penis or generic)
+      if (selectedSpotId === 'intimate') {
+        matchingServices = matchingServices.filter(srv => {
+          if (srv.id.includes('vagina') && intimateAnatomyVariant !== 'vagina') return false;
+          if (srv.id.includes('penis') && intimateAnatomyVariant !== 'penis') return false;
+          return true;
+        });
+      }
+
+      servicesList.innerHTML = '';
+
+      if (matchingServices.length === 0) {
+        servicesList.innerHTML = '<p class="text-[11px] text-gray-500 italic">No services listed for this target spot.</p>';
+        return;
+      }
+
+      matchingServices.forEach(srv => {
+        const isInCart = selectedServicesCart.some(c => c.id === srv.id);
+        const srvCard = document.createElement('div');
+        srvCard.className = `p-3 rounded-xl flex items-center justify-between transition border ${
+          isInCart ? 'bg-[#39ff14]/5 border-[#39ff14]/30' : 'bg-black/20 border-white/5 hover:border-white/10'
+        }`;
+
+        const isManscaping = srv.category === 'Manscaping';
+
+        srvCard.innerHTML = `
+          <div class="space-y-0.5 max-w-[70%]">
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-semibold text-white">${srv.name}</span>
+              <span class="text-[8px] px-1.5 py-0.2 rounded-full font-bold uppercase font-mono ${
+                isManscaping ? 'bg-yellow-500/10 text-[#D4AF37] border border-yellow-500/20' : 'bg-[#39ff14]/10 text-[#39ff14] border border-[#39ff14]/20'
+              }">${isManscaping ? 'Trim' : 'Wax'}</span>
+            </div>
+            <p class="text-[10px] text-gray-400 leading-normal truncate">${srv.desc}</p>
+            <div class="flex gap-2 text-[9px] font-mono text-gray-500">
+              <span>${srv.duration} mins</span>
+              <span>•</span>
+              <span class="text-[#D4AF37] font-semibold">$${srv.price.toFixed(2)}</span>
+            </div>
+          </div>
+          
+          <button onclick="toggleCartService('${srv.id}')" class="py-1 px-3 rounded-lg text-[10px] font-bold font-display uppercase transition cursor-pointer ${
+            isInCart 
+              ? 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20' 
+              : 'bg-[#39ff14] hover:scale-102 text-black shadow-lg shadow-[#39ff14]/10'
+          }">
+            ${isInCart ? 'Remove' : 'Add to Book'}
+          </button>
+        `;
+
+        servicesList.appendChild(srvCard);
+      });
+    }
+
+    // Toggle Service In / Out of cart
+    function toggleCartService(serviceId) {
+      const srvObj = SERVICES_DATA.find(s => s.id === serviceId);
+      if (!srvObj) return;
+
+      const idx = selectedServicesCart.findIndex(s => s.id === serviceId);
+      if (idx > -1) {
+        selectedServicesCart.splice(idx, 1);
+      } else {
+        // Trigger safety check for facial waxing on addition
+        if (srvObj.category === 'Face Waxing') {
+          activeFacialServiceIdToAdd = serviceId;
+          openSkincareSafetyModal();
+          return;
+        }
+        selectedServicesCart.push({ ...srvObj });
+      }
+
+      runSmartSetCalculus();
+      renderSelectedSpotDetails();
+    }
+
+    // Filter facial waxing addition variables
+    let activeFacialServiceIdToAdd = null;
+    function openSkincareSafetyModal() {
+      document.getElementById('skincare-modal').classList.remove('hidden');
+    }
+
+    function dismissSafetyModal(blocked) {
+      document.getElementById('skincare-modal').classList.add('hidden');
+      const isRetin = document.getElementById('safety-retin').checked;
+      const isAccutane = document.getElementById('safety-accutane').checked;
+
+      // If clinical skincare block active
+      if (blocked || isRetin || isAccutane) {
+        alert("Safety Warning: Active retinols/Accutane detected. To prevent severe skin stripping and injury, facial waxing cannot be performed. We highly recommend body waxing or manscaping services instead!");
+        activeFacialServiceIdToAdd = null;
+        document.getElementById('safety-retin').checked = false;
+        document.getElementById('safety-accutane').checked = false;
+        return;
+      }
+
+      // Safe to proceed, add facial service
+      if (activeFacialServiceIdToAdd) {
+        const srvObj = SERVICES_DATA.find(s => s.id === activeFacialServiceIdToAdd);
+        if (srvObj && !selectedServicesCart.some(s => s.id === srvObj.id)) {
+          selectedServicesCart.push({ ...srvObj });
+        }
+      }
+      activeFacialServiceIdToAdd = null;
+      runSmartSetCalculus();
+      renderSelectedSpotDetails();
+    }
+
+    // 5. SMART SET-THEORY CALCULUS & OVERLAP ALGORITHMS
+    function runSmartSetCalculus() {
+      let cart = [...selectedServicesCart];
+      const alertArea = document.getElementById('cart-alert-area');
+      alertArea.innerHTML = '';
+      alertArea.classList.add('hidden');
+
+      const cartIds = cart.map(c => c.id);
+
+      // --- RULE A: THE BRAZILIAN SUPREMACY (Bikini Full + Butt Strip) ---
+      // Bikini full (vagina/penis) id can be bikini-full-vagina or bikini-full-penis or manscaping variant
+      const hasBikiniFull = cart.some(c => c.id.includes('bikini-full'));
+      const hasButtStrip = cart.some(c => c.id === 'intimate-butt-strip');
+
+      if (hasBikiniFull && hasButtStrip) {
+        // Merge into Brazilian
+        cart = cart.filter(c => !c.id.includes('bikini-full') && c.id !== 'intimate-butt-strip');
+        
+        // Pick proper anatomical Brazilian
+        const brazilianId = intimateAnatomyVariant === 'penis' ? 'intimate-brazilian-penis' : 'intimate-brazilian-vagina';
+        const brazilianService = SERVICES_DATA.find(s => s.id === brazilianId);
+        
+        if (brazilianService && !cart.some(c => c.id === brazilianId)) {
+          cart.push({ ...brazilianService });
+          
+          alertArea.innerHTML += `
+            <div class="p-3 bg-[#39ff14]/10 border border-[#39ff14]/30 rounded-xl text-[10px] text-gray-300 space-y-1">
+              <span class="font-bold text-[#39ff14] uppercase tracking-wider font-mono">⚡ Smart Merge: Brazilian Supremacy</span>
+              <p>You added Bikini Full + Butt Strip. Our system automatically consolidated them into a full **Brazilian** ($90 value) to avoid duplicate fees.</p>
+            </div>
+          `;
+          alertArea.classList.remove('hidden');
+        }
+      }
+
+      // --- RULE B: THE CHEEK-TO-STRIP OVERLAP GUARD ---
+      // Butt - Full + Brazilian
+      const hasButtFull = cart.some(c => c.id === 'intimate-butt-full');
+      const hasBrazilian = cart.some(c => c.id.includes('brazilian'));
+
+      if (hasButtFull && hasBrazilian) {
+        // Resolve overlap by replacing both with Bikini - Full + Butt - Full (saves $15)
+        cart = cart.filter(c => !c.id.includes('brazilian') && c.id !== 'intimate-butt-full');
+        
+        const bikiniId = intimateAnatomyVariant === 'penis' ? 'intimate-bikini-full-penis' : 'intimate-bikini-full-vagina';
+        const bikiniService = SERVICES_DATA.find(s => s.id === bikiniId);
+        const buttFullService = SERVICES_DATA.find(s => s.id === 'intimate-butt-full');
+
+        if (bikiniService && buttFullService) {
+          cart.push({ ...bikiniService });
+          cart.push({ ...buttFullService });
+
+          alertArea.innerHTML += `
+            <div class="p-3 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl text-[10px] text-gray-300 space-y-1 mt-2">
+              <span class="font-bold text-[#D4AF37] uppercase tracking-wider font-mono">⚡ Overlap Guard: Cheek-to-Strip</span>
+              <p>Brazilian + Butt Full overlapping detected (both cover butt strip). Replaced with **Bikini Full + Butt Full** to provide complete back-to-front posterior coverage, saving you **$15.00** instantly!</p>
+            </div>
+          `;
+          alertArea.classList.remove('hidden');
+        }
+      }
+
+      // --- RULE C: THE SANITARY CLIPPER SAFETY OVERRIDE ---
+      const hasClippedIntimate = cart.some(c => c.id.includes('manscaping-bikini-full'));
+      const hasCleftWax = cart.some(c => c.id === 'intimate-butt-strip');
+
+      if (hasClippedIntimate && hasCleftWax) {
+        alertArea.innerHTML += `
+          <div class="p-3 bg-red-950/20 border border-red-500/20 rounded-xl text-[10px] text-gray-300 space-y-1 mt-2">
+            <span class="font-bold text-red-400 uppercase tracking-wider font-mono">🛡️ Safety Override: Hard Wax Enforcement</span>
+            <p>Clippers are strictly locked out of the intergluteal cleft (butt strip) to prevent skin cuts. Butt strip waxing remains set to hard wax for sanitary security.</p>
+          </div>
+        `;
+        alertArea.classList.remove('hidden');
+      }
+
+      selectedServicesCart = cart;
+      updateCartDisplay();
+    }
+
+    // Simulated Test Buttons
+    function triggerTestOverlap(type) {
+      selectedServicesCart = [];
+      if (type === 'brazilian') {
+        const s1 = SERVICES_DATA.find(s => s.id === 'intimate-bikini-full-penis');
+        const s2 = SERVICES_DATA.find(s => s.id === 'intimate-butt-strip');
+        selectedServicesCart.push({ ...s1 }, { ...s2 });
+      } else if (type === 'cheek') {
+        const s1 = SERVICES_DATA.find(s => s.id === 'intimate-brazilian-penis');
+        const s2 = SERVICES_DATA.find(s => s.id === 'intimate-butt-full');
+        selectedServicesCart.push({ ...s1 }, { ...s2 });
+      }
+      runSmartSetCalculus();
+      renderSelectedSpotDetails();
+    }
+
+    // Refresh pricing, durations, and cart html state
+    function updateCartDisplay() {
+      const container = document.getElementById('cart-container');
+      const emptyMsg = document.getElementById('empty-cart');
+      const pSubtotal = document.getElementById('price-subtotal');
+      const sDuration = document.getElementById('service-duration');
+      const aDuration = document.getElementById('aggregate-duration');
+      const pTotal = document.getElementById('price-total');
+
+      if (selectedServicesCart.length === 0) {
+        container.innerHTML = '';
+        container.appendChild(emptyMsg);
+        pSubtotal.innerText = "$0.00";
+        sDuration.innerText = "0 mins";
+        aDuration.innerText = "15 mins"; // Just the sanitary buffer
+        pTotal.innerText = "$0.00";
+        updateSubmitButton();
+        return;
+      }
+
+      if (emptyMsg && emptyMsg.parentNode) {
+        emptyMsg.remove();
+      }
+
+      container.innerHTML = '';
+      
+      let totalP = 0;
+      let totalD = 0;
+
+      selectedServicesCart.forEach(srv => {
+        totalP += srv.price;
+        totalD += srv.duration;
+
+        const cartItem = document.createElement('div');
+        cartItem.className = "flex items-center justify-between p-2.5 rounded-lg bg-black/40 border border-white/5 text-xs";
+        cartItem.innerHTML = `
+          <div class="flex flex-col">
+            <span class="font-semibold text-white text-[11px]">${srv.name}</span>
+            <span class="text-[9px] text-gray-500 font-mono">${srv.duration} mins</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-[#D4AF37] font-semibold text-[11px]">$${srv.price.toFixed(2)}</span>
+            <button onclick="toggleCartService('${srv.id}')" class="text-gray-500 hover:text-red-400 font-bold transition text-sm cursor-pointer">×</button>
+          </div>
+        `;
+        container.appendChild(cartItem);
+      });
+
+      pSubtotal.innerText = `$${totalP.toFixed(2)}`;
+      sDuration.innerText = `${totalD} mins`;
+      
+      // Calculate aggregate slot + 15 invisible buffer
+      aDuration.innerText = `${totalD + 15} mins`;
+      pTotal.innerText = `$${totalP.toFixed(2)}`;
+
+      updateSubmitButton();
+    }
+
+    // 6. FORM SAFETY GATES AND NDA CANVAS DRAW
+    let canvas, ctx, isDrawing = false;
+
+    function initSignaturePad() {
+      canvas = document.getElementById('sig-pad');
+      ctx = canvas.getContext('2d');
+      ctx.strokeStyle = '#39ff14';
+      ctx.lineWidth = 2;
+
+      // Handle pointer mouse actions
+      canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        document.getElementById('sig-placeholder').classList.add('hidden');
+        ctx.beginPath();
+        ctx.moveTo(getMousePos(e).x, getMousePos(e).y);
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
+        ctx.lineTo(getMousePos(e).x, getMousePos(e).y);
+        ctx.stroke();
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDrawing = false;
+        updateSubmitButton();
+      });
+
+      // Handle touch action on mobile devices
+      canvas.addEventListener('touchstart', (e) => {
+        isDrawing = true;
+        document.getElementById('sig-placeholder').classList.add('hidden');
+        const touch = e.touches[0];
+        ctx.beginPath();
+        ctx.moveTo(getTouchPos(touch).x, getTouchPos(touch).y);
+        e.preventDefault();
+      });
+
+      canvas.addEventListener('touchmove', (e) => {
+        if (!isDrawing) return;
+        const touch = e.touches[0];
+        ctx.lineTo(getTouchPos(touch).x, getTouchPos(touch).y);
+        ctx.stroke();
+        e.preventDefault();
+      });
+
+      canvas.addEventListener('touchend', (e) => {
+        isDrawing = false;
+        updateSubmitButton();
+        e.preventDefault();
+      });
+    }
+
+    function getMousePos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+    }
+
+    function getTouchPos(touch) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+      };
+    }
+
+    function clearSignature() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      document.getElementById('sig-placeholder').classList.remove('hidden');
+      updateSubmitButton();
+    }
+
+    // Verify client is 18 years of age (DOB validation)
+    function checkAge() {
+      const dobVal = document.getElementById('birthdate-input').value;
+      const alertE = document.getElementById('age-alert');
+      
+      if (!dobVal) {
+        ageValid = false;
+        alertE.classList.add('hidden');
+        updateSubmitButton();
+        return;
+      }
+
+      const birth = new Date(dobVal);
+      const today = new Date();
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        age--;
+      }
+
+      if (age >= 18) {
+        ageValid = true;
+        alertE.classList.add('hidden');
+      } else {
+        ageValid = false;
+        alertE.classList.remove('hidden');
+      }
+      updateSubmitButton();
+    }
+
+    // Mock Upload Action
+    function triggerMockUpload() {
+      uploadCaptured = true;
+      const label = document.getElementById('upload-label');
+      label.innerText = "✓ ID Verified Successfully";
+      label.className = "text-[10px] text-[#39ff14] font-semibold";
+      updateSubmitButton();
+    }
+
+    // Lock Submit button unless all gates (signature, age check, file upload, cancellation policy check) are met
+    function updateSubmitButton() {
+      const chk = document.getElementById('cancellation-chk').checked;
+      const btn = document.getElementById('book-btn');
+
+      // Verify signature is not blank (checking canvas pixel data)
+      const isSigned = isCanvasWritten();
+
+      const allValid = ageValid && uploadCaptured && isSigned && chk && selectedServicesCart.length > 0;
+
+      if (allValid) {
+        btn.disabled = false;
+        btn.className = "w-full py-3 px-6 bg-[#39ff14] text-black rounded-xl text-xs font-bold font-display uppercase tracking-wider cursor-pointer hover:scale-[1.02] shadow-[0_0_20px_rgba(57,255,20,0.3)] transition-all-custom duration-300";
+      } else {
+        btn.disabled = true;
+        btn.className = "w-full py-3 px-6 bg-gray-800 text-gray-500 rounded-xl text-xs font-bold font-display uppercase tracking-wider cursor-not-allowed transition-all-custom duration-300";
+      }
+    }
+
+    function isCanvasWritten() {
+      if (!canvas) return false;
+      const blank = document.createElement('canvas');
+      blank.width = canvas.width;
+      blank.height = canvas.height;
+      return canvas.toDataURL() !== blank.toDataURL();
+    }
+
+    // Booking Submission Success Popup
+    function submitBooking() {
+      let totalD = selectedServicesCart.reduce((acc, curr) => acc + curr.duration, 0);
+      document.getElementById('success-duration').innerText = `${totalD + 15} mins (Includes buffer)`;
+      document.getElementById('success-modal').classList.remove('hidden');
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('success-modal').classList.add('hidden');
+      
+      // Reset cart and signature
+      selectedServicesCart = [];
+      clearSignature();
+      document.getElementById('cancellation-chk').checked = false;
+      document.getElementById('birthdate-input').value = '';
+      
+      // Reset file upload label
+      const label = document.getElementById('upload-label');
+      label.innerText = "Upload ID Card";
+      label.className = "text-[10px] text-gray-400";
+      uploadCaptured = false;
+      ageValid = false;
+
+      updateCartDisplay();
+      renderSelectedSpotDetails();
+    }
+  </script>
+</body>
+</html>
