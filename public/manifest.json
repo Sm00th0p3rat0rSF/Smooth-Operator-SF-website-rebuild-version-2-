@@ -1,0 +1,25 @@
+{
+  "name": "Smooth Operator SF",
+  "short_name": "Smooth Operator",
+  "name_localized": "Smooth Operator SF | Premium Waxing & Manscaping",
+  "description": "High-efficiency web storefront, booking scheduler, and mandatory intake vault for Smooth Operator SF.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a09",
+  "theme_color": "#0c0a09",
+  "icons": [
+    {
+      "src": "/src/assets/images/SOFavicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/src/assets/images/SOFavicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "entities": {
+    "booking": {
+      "title": "Booking",
+      "description": "An appointment booked by a client for waxing/manscaping services.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique ID of the booking."
+        },
+        "clientName": {
+          "type": "string",
+          "description": "The full name of the client."
+        },
+        "clientEmail": {
+          "type": "string",
+          "description": "The email address of the client."
+        },
+        "clientPhone": {
+          "type": "string",
+          "description": "The phone number of the client."
+        },
+        "services": {
+          "type": "array",
+          "description": "The list of services added to the cart."
+        },
+        "totalPrice": {
+          "type": "number",
+          "description": "Total price of services."
+        },
+        "totalDuration": {
+          "type": "number",
+          "description": "Total duration in minutes including 15 min cleaning buffer."
+        },
+        "date": {
+          "type": "string",
+          "description": "Booking date formatted as YYYY-MM-DD."
+        },
+        "time": {
+          "type": "string",
+          "description": "Booking time slot formatted as HH:MM."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "accepted", "declined"],
+          "description": "The current status of the booking."
+        },
+        "ndaSigned": {
+          "type": "boolean",
+          "description": "Whether the client signed the NDA."
+        },
+        "ndaSignature": {
+          "type": "string",
+          "description": "The digital signature representation (e.g. text or canvas data URL)."
+        },
+        "isOver18": {
+          "type": "boolean",
+          "description": "Whether the client is 18 years or older."
+        },
+        "skincareCheck": {
+          "type": "boolean",
+          "description": "Confirmation that facial skincare products (Retin-A, Accutane) were not used recently if facial waxing is selected."
+        },
+        "stripeCardHoldToken": {
+          "type": "string",
+          "description": "Token representing the Stripe card hold reference."
+        },
+        "googleEventId": {
+          "type": "string",
+          "description": "The corresponding Google Calendar event ID."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The timestamp of when the booking was made."
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "The timestamp of when the booking was updated."
+        }
+      },
+      "required": [
+        "clientName",
+        "clientEmail",
+        "clientPhone",
+        "services",
+        "totalPrice",
+        "totalDuration",
+        "date",
+        "time",
+        "status",
+        "ndaSigned",
+        "isOver18"
+      ]
+    },
+    "blockout": {
+      "title": "Blockout",
+      "description": "A blocked-out date or vacation period designated by Drew.",
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "description": "Blocked date formatted as YYYY-MM-DD."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for blocking the date."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp representing blockout creation."
+        }
+      },
+      "required": ["date", "reason", "createdAt"]
+    },
+    "calendar_busy_slot": {
+      "title": "CalendarBusySlot",
+      "description": "A busy slot synchronized from Drew's Google Calendar to prevent scheduling conflicts.",
+      "type": "object",
+      "properties": {
+        "googleEventId": {
+          "type": "string",
+          "description": "The ID of the primary Google Calendar event."
+        },
+        "start": {
+          "type": "string",
+          "description": "The start date-time or date."
+        },
+        "end": {
+          "type": "string",
+          "description": "The end date-time or date."
+        },
+        "summary": {
+          "type": "string",
+          "description": "The Google Calendar event summary."
+        },
+        "date": {
+          "type": "string",
+          "description": "The date of the busy slot as YYYY-MM-DD."
+        },
+        "syncedAt": {
+          "type": "string",
+          "description": "The timestamp indicating when this slot was synchronized."
+        }
+      },
+      "required": ["googleEventId", "start", "end", "summary", "date", "syncedAt"]
+    },
+    "client_profile": {
+      "title": "ClientProfile",
+      "description": "A detailed profile for a registered client containing contact details and studio preferences.",
+      "type": "object",
+      "properties": {
+        "clientName": {
+          "type": "string",
+          "description": "The full name of the client."
+        },
+        "clientEmail": {
+          "type": "string",
+          "description": "The lowercase client email address (acts as unique record ID)."
+        },
+        "clientPhone": {
+          "type": "string",
+          "description": "The primary contact phone number."
+        },
+        "clientBirthday": {
+          "type": "string",
+          "description": "Client's date of birth."
+        },
+        "clientAddress": {
+          "type": "string",
+          "description": "Physical billing/contact address."
+        },
+        "preferredPronouns": {
+          "type": "string",
+          "description": "Client's preferred gender pronouns (inclusive styling)."
+        },
+        "skinSensitivity": {
+          "type": "string",
+          "description": "Self-reported skin sensitivities (e.g. standard, hyper-reactive, retinol-user)."
+        },
+        "preferredMusic": {
+          "type": "string",
+          "description": "Preferred ambient room music or atmosphere."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional custom preferences, service notes, or waxing specific guidelines."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp indicating the last profile update."
+        }
+      },
+      "required": ["clientName", "clientEmail", "clientPhone", "createdAt", "updatedAt"]
+    },
+    "profile_request": {
+      "title": "ProfileRequest",
+      "description": "A client request to edit or delete their studio profile, reviewed by Drew.",
+      "type": "object",
+      "properties": {
+        "clientEmail": {
+          "type": "string",
+          "description": "Email of the client initiating the request."
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Name of the client initiating the request."
+        },
+        "requestType": {
+          "type": "string",
+          "enum": ["edit", "delete"],
+          "description": "The type of change requested (edit or delete)."
+        },
+        "details": {
+          "type": "string",
+          "description": "Detailed description of requested edits or deletion rationale."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed", "declined"],
+          "description": "The processing status of the request."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp of last status modification."
+        }
+      },
+      "required": ["clientEmail", "clientName", "requestType", "details", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/bookings/{bookingId}": {
+      "schema": "booking",
+      "description": "Collection of visitor bookings and manscaping/waxing appointments."
+    },
+    "/blockouts/{blockoutId}": {
+      "schema": "blockout",
+      "description": "Collection of blocked calendar days and vacation rest periods."
+    },
+    "/drew_calendar_busy_slots/{slotId}": {
+      "schema": "calendar_busy_slot",
+      "description": "Collection of Drew's Google Calendar busy event intervals."
+    },
+    "/client_profiles/{profileId}": {
+      "schema": "client_profile",
+      "description": "Secure storage directory for client-specific profile details."
+    },
+    "/profile_requests/{requestId}": {
+      "schema": "profile_request",
+      "description": "Secure collection for pending profile alteration or erasure requests from clients."
+    }
+  }
+}

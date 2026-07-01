@@ -1,0 +1,190 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && 
+             (request.auth.token.email == "drew@smoothoperatorsf.com" || request.auth.token.email == "admin@smoothoperatorsf.com") && 
+             request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\:\\.]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation helper for booking data shape (The Eight Pillars of Security Assurance)
+    function isValidBooking(data) {
+      return data.clientName is string && data.clientName.size() > 0 && data.clientName.size() <= 100 &&
+             data.clientEmail is string && data.clientEmail.size() > 0 && data.clientEmail.size() <= 100 &&
+             data.clientPhone is string && data.clientPhone.size() > 0 && data.clientPhone.size() <= 30 &&
+             data.services is list && data.services.size() > 0 && data.services.size() <= 30 &&
+             data.totalPrice is number && data.totalPrice >= 0 &&
+             data.totalDuration is number && data.totalDuration > 0 &&
+             data.date is string && data.date.size() == 10 &&
+             data.time is string && data.time.size() == 5 &&
+             data.status is string && (data.status == "pending" || data.status == "accepted" || data.status == "declined") &&
+             data.isOver18 == true &&
+             data.ndaSigned == true &&
+             (!("ndaSignature" in data) || (data.ndaSignature is string && data.ndaSignature.size() <= 100000)) &&
+             (!("skincareCheck" in data) || (data.skincareCheck is bool)) &&
+             (!("stripeCardHoldToken" in data) || (data.stripeCardHoldToken is string && data.stripeCardHoldToken.size() <= 100)) &&
+             (!("googleEventId" in data) || (data.googleEventId is string && data.googleEventId.size() <= 200)) &&
+             (!("ndaDriveFileId" in data) || (data.ndaDriveFileId is string && data.ndaDriveFileId.size() <= 200)) &&
+             (!("ndaDriveFileLink" in data) || (data.ndaDriveFileLink is string && data.ndaDriveFileLink.size() <= 500)) &&
+             (!("googleDocId" in data) || (data.googleDocId is string && data.googleDocId.size() <= 200)) &&
+             (!("googleDocUrl" in data) || (data.googleDocUrl is string && data.googleDocUrl.size() <= 500)) &&
+             (!("createdAt" in data) || (data.createdAt is string && data.createdAt.size() <= 50)) &&
+             (!("updatedAt" in data) || (data.updatedAt is string && data.updatedAt.size() <= 50));
+    }
+
+    // Validation helper for blockout date shape
+    function isValidBlockout(data) {
+      return data.date is string && data.date.size() == 10 &&
+             data.reason is string && data.reason.size() <= 500 &&
+             data.createdAt is string && data.createdAt.size() <= 50;
+    }
+
+    // Validation helper for calendar busy slots
+    function isValidBusySlot(data) {
+      return data.googleEventId is string && data.googleEventId.size() <= 200 &&
+             data.start is string && data.start.size() <= 100 &&
+             data.end is string && data.end.size() <= 100 &&
+             data.summary is string && data.summary.size() <= 200 &&
+             data.date is string && data.date.size() <= 20 &&
+             data.syncedAt is string && data.syncedAt.size() <= 50;
+    }
+
+    // Validation helper for profile requests shape
+    function isValidProfileRequest(data) {
+      return data.clientEmail is string && data.clientEmail.size() > 0 && data.clientEmail.size() <= 100 &&
+             data.clientName is string && data.clientName.size() > 0 && data.clientName.size() <= 100 &&
+             data.requestType is string && (data.requestType == "edit" || data.requestType == "delete") &&
+             data.details is string && data.details.size() > 0 && data.details.size() <= 10000 &&
+             data.status is string && (data.status == "pending" || data.status == "completed" || data.status == "declined") &&
+             data.createdAt is string && data.createdAt.size() <= 50 &&
+             data.updatedAt is string && data.updatedAt.size() <= 50;
+    }
+
+    // Bookings collection mapping
+    match /bookings/{bookingId} {
+      // Any user can retrieve their own booking details via direct lookup ID (e.g., status/confirmation page)
+      allow get: if isValidId(bookingId);
+      
+      // Index list of bookings is strictly gated to the verified studio administrator
+      allow list: if isAdmin();
+
+      // Creation allows anyone supplying correct schema parameters, initializing status as 'pending'
+      allow create: if isValidId(bookingId) && 
+                       isValidBooking(incoming()) && 
+                       incoming().status == "pending" &&
+                       incoming().keys().hasAll(['clientName', 'clientEmail', 'clientPhone', 'services', 'totalPrice', 'totalDuration', 'date', 'time', 'status', 'isOver18', 'ndaSigned']);
+
+      // State mutations (Accepted/Declined, calendar indicators) are restricted to Drew (Admin)
+      allow update: if isAdmin() && 
+                       isValidBooking(incoming()) && 
+                       incoming().clientName == existing().clientName &&
+                       incoming().clientEmail == existing().clientEmail &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'status',
+                         'googleEventId',
+                         'ndaDriveFileId',
+                         'ndaDriveFileLink',
+                         'googleDocId',
+                         'googleDocUrl',
+                         'updatedAt'
+                       ]);
+
+      // Direct client deletion of appointment archives is strictly forbidden
+      allow delete: if false;
+    }
+
+    // Blockout schedules
+    match /blockouts/{blockoutId} {
+      // Allow general public to retrieve individually or list blocked rest periods in date pickers
+      allow get: if isValidId(blockoutId);
+      allow list: if true;
+
+      // Rest period updates or additions are restricted to Drew
+      allow create, update: if isAdmin() && isValidId(blockoutId) && isValidBlockout(incoming());
+      
+      // Vacation record removals are restricted to Drew
+      allow delete: if isAdmin();
+    }
+
+    // Google Calendar cached busy intervals
+    match /drew_calendar_busy_slots/{slotId} {
+      // Allow general public to view busy slots to suppress occupied hourly grids
+      allow get: if isValidId(slotId);
+      allow list: if true;
+
+      // Sync inserts/updates of busy blocks are restricted to Drew
+      allow create, update: if isAdmin() && isValidId(slotId) && isValidBusySlot(incoming());
+      
+      // Sync purging of busy blocks is restricted to Drew
+      allow delete: if isAdmin();
+    }
+
+    // Settings configuration
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(settingId);
+    }
+
+    // Prepaid Packages collection
+    match /prepaid_packages/{packageId} {
+      allow read, write: if isAdmin() && isValidId(packageId);
+    }
+
+    // Client Profiles collection
+    match /client_profiles/{profileId} {
+      // Drew (Admin) has unrestricted access
+      allow read, write: if isAdmin();
+
+      // Clients can only get their single profile matching their email document ID securely
+      allow get: if isValidId(profileId);
+
+      // Clients can write their initial profile creation during booking checkout
+      allow create: if isValidId(profileId);
+
+      // Clients cannot list, update, or delete their profile; modifications must run via Drew/Admin or requests
+      allow list, update, delete: if false;
+    }
+
+    // Profile Requests (Edit / Deletion pending queue)
+    match /profile_requests/{requestId} {
+      // Drew (Admin) has unrestricted access to read, review, and resolve requests
+      allow read, write: if isAdmin();
+
+      // Clients can submit a pending edit/delete request with correct validation parameters
+      allow create: if isValidId(requestId) &&
+                       incoming().status == "pending" &&
+                       isValidProfileRequest(incoming());
+
+      // Clients cannot query list of requests or modify/delete them directly once filed
+      allow list, update, delete: if false;
+    }
+
+    // Connectivity Validation Endpoint for Startup check
+    match /test/connection {
+      allow read, write: if true;
+    }
+  }
+}

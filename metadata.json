@@ -1,0 +1,10 @@
+{
+  "name": "Remix: Smooth Operator SF Website final",
+  "description": "High-fidelity waxing and manscaping calendar booking system, fully integrated with Google Calendar.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
